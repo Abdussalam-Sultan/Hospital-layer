@@ -1,8 +1,9 @@
 import { Sequelize, DataTypes, Op } from 'sequelize';
+import pg from 'pg';
 import dotenv from 'dotenv';
 
 dotenv.config();
-const dbUrl = process.env.DB_URL || '';
+const dbUrl = process.env.DATABASE_URL || process.env.DB_URL || '';
 const dbDialect = process.env.DB_DIALECT || 'postgres';
 const dbHost = process.env.DB_HOST || '127.0.0.1';
 const dbPort = parseInt(process.env.DB_PORT || '3306', 10);
@@ -16,6 +17,7 @@ if (dbUrl) {
 
   sequelize = new Sequelize(dbUrl, {
   dialect: dbDialect,
+  dialectModule: dbDialect === 'postgres' ? pg : undefined,
   logging: false,
   dialectOptions: {
     ssl: {
