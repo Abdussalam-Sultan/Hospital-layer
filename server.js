@@ -1,8 +1,5 @@
 import express from 'express';
 import dotenv from 'dotenv';
-import path from 'path';
-import { fileURLToPath } from 'url';
-import { createServer as createViteServer } from 'vite';
 import { Staff} from './models/index.js';
 import { initSchema } from './db/index.js';
 import { anchorChain } from './utils/hashChain.js';
@@ -58,21 +55,6 @@ await initSchema();
 
   if (anchorInterval.unref) {
     anchorInterval.unref();
-  }
-
-  // Vite middleware for development; static assets for production
-  if (process.env.NODE_ENV !== 'production') {
-    const vite = await createViteServer({
-      server: { middlewareMode: true },
-      appType: 'spa',
-    });
-    app.use(vite.middlewares);
-  } else {
-    const distPath = path.join(process.cwd(), 'dist');
-    app.use(express.static(distPath));
-    app.get('*', (req, res) => {
-      res.sendFile(path.join(distPath, 'index.html'));
-    });
   }
 
   app.listen(PORT, '0.0.0.0', () => {

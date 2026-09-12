@@ -1,6 +1,0 @@
-{
-  "name": "Hospital Patient Records Access Control System",
-  "description": "Node.js and Express backend prototype for a hospital patient-records dynamic access control system with tamper-evident audit log.",
-  "requestFramePermissions": [],
-  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
-}

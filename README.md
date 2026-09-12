@@ -823,5 +823,4 @@ curl -s http://localhost:3000/logs/verify \
 | `npm run dev` | Start the server through nodemon for development. |
 | `npm start` | Start the server. |
 | `npm run seed` | Destructively reset the database to demo data. |
-| `npm run build` | Build the current frontend with Vite. |
 | `npm run lint` | Run Node syntax checks on backend files. |

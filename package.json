@@ -1,5 +1,5 @@
 {
-  "name": "react-example",
+  "name": "hospital-patient-records-api",
   "private": true,
   "version": "0.0.0",
   "type": "module",
@@ -8,36 +8,22 @@
     "start": "node server.js",
     "seed": "node seed.js",
     "lint": "node --check server.js seed.js db/index.js utils/hashChain.js routes/auth.js routes/patients.js routes/logs.js routes/admin.js middleware/auth.js middleware/requireAdmin.js",
-    "build": "vite build",
-    "clean": "rm -rf dist hospital.db hospital.db-wal hospital.db-shm"
+    "clean": "rm -rf hospital.db hospital.db-wal hospital.db-shm"
   },
   "dependencies": {
-    "@google/genai": "^2.4.0",
-    "@tailwindcss/vite": "^4.1.14",
-    "@vitejs/plugin-react": "^5.0.4",
     "bcryptjs": "^3.0.3",
     "better-sqlite3": "^13.0.3",
     "dotenv": "^17.2.3",
     "express": "^4.21.2",
     "jsonwebtoken": "^9.0.3",
-    "lucide-react": "^0.546.0",
-    "motion": "^12.23.24",
     "mysql2": "^3.24.4",
     "nodemon": "^3.1.14",
     "pg": "^8.20.0",
-    "react": "^19.0.1",
-    "react-dom": "^19.0.1",
-    "sequelize": "^6.37.8",
-    "vite": "^6.2.3"
+    "sequelize": "^6.37.8"
   },
   "devDependencies": {
     "@types/express": "^4.17.21",
     "@types/node": "^22.14.0",
-    "autoprefixer": "^10.4.21",
-    "esbuild": "^0.25.0",
-    "tailwindcss": "^4.1.14",
-    "tsx": "^4.21.0",
-    "typescript": "~5.8.2",
-    "vite": "^6.2.3"
+    "tsx": "^4.21.0"
   }
 }
