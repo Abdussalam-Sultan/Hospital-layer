@@ -61,7 +61,3 @@ export async function initSchema() {
   await sequelize.sync();
 }
 export {sequelize}
-
-initSchema().catch((err) => {
-  console.error('Failed to sync Sequelize schema:', err.message);
-});

@@ -1,13 +1,7 @@
-import express from 'express';
 import dotenv from 'dotenv';
 import { Staff} from './models/index.js';
 import { initSchema } from './db/index.js';
-import { anchorChain } from './utils/hashChain.js';
-import authRouter from './routes/auth.js';
-import patientsRouter from './routes/patients.js';
-import logsRouter from './routes/logs.js';
-import adminRouter from './routes/admin.js';
-import testRouter from './routes/test.js';
+import { app, startAnchorScheduler } from './app.js';
 
 dotenv.config();
 
@@ -28,34 +22,8 @@ await initSchema();
     console.error('Initial count check/seed error:', err);
   }
 
-  const app = express();
   const PORT = process.env.PORT || 3000;
-
-  app.use(express.json());
-
-  // API Routes MUST be mounted FIRST
-  app.use('/auth', authRouter);
-  app.use('/patients', patientsRouter);
-  app.use('/logs', logsRouter);
-  app.use('/admin', adminRouter);
-  app.use('/api', testRouter);
-
-  // Background anchoring job: runs every 2 minutes
-  const ANCHOR_INTERVAL_MS = 2 * 60 * 1000;
-  const anchorInterval = setInterval(async () => {
-    try {
-      const anchor = await anchorChain();
-      if (anchor) {
-        console.log(`[ANCHOR] Periodic chain anchor recorded: row ${anchor.row_id_at_anchor} -> ${anchor.anchor_hash.substring(0, 16)}...`);
-      }
-    } catch (err) {
-      console.error('[ANCHOR] Periodic anchor error:', err.message);
-    }
-  }, ANCHOR_INTERVAL_MS);
-
-  if (anchorInterval.unref) {
-    anchorInterval.unref();
-  }
+  startAnchorScheduler();
 
   app.listen(PORT, '0.0.0.0', () => {
     console.log(`Server running on http://localhost:${PORT}`);

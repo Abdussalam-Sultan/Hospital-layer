@@ -54,6 +54,39 @@ npm run dev
 
 The server synchronizes the Sequelize schema on startup. If the staff table is empty, it automatically seeds demo data. `npm run seed` is destructive and should only be used for local development.
 
+### Deploy on Vercel
+
+This repository includes a Vercel serverless entrypoint at `api/index.js` and routing in `vercel.json`. The deployed API keeps the same paths documented below, such as `POST /auth/login` and `GET /patients`.
+
+1. Create a Vercel project connected to this repository.
+2. Use the repository root as the project root.
+3. Set the Vercel runtime to Node.js through the default project settings. No build command is required for the API.
+4. Add the production environment variables in Vercel:
+
+```env
+DB_URL=mysql://user:password@host:3306/hospitaldb
+DB_DIALECT=mysql
+JWT_SECRET=replace-with-a-long-random-production-secret
+CORS_ORIGIN=https://your-new-frontend.example.com
+```
+
+`DB_URL` is recommended for Vercel. The database must be a reachable hosted MySQL-compatible service; `127.0.0.1` points to the Vercel runtime, not your development computer. The database must allow connections from Vercel's deployment environment and should use TLS where supported.
+
+The handler caches database initialization while a serverless instance stays warm. Vercel instances are ephemeral, so do not rely on local files, in-memory state, or local SQLite persistence. This project uses MySQL for deployment.
+
+Set `CORS_ORIGIN` to one or more comma-separated frontend origins. Do not use `*` when the frontend later requires credentialed browser requests. The current API uses Bearer tokens in headers and does not use cookie credentials.
+
+After deployment, verify the service with:
+
+```bash
+curl https://your-project.vercel.app/api/health
+curl -X POST https://your-project.vercel.app/auth/login \
+  -H "Content-Type: application/json" \
+  -d '{"staffId":"doc-meredith-grey","password":"password123"}'
+```
+
+For production, disable or protect `/api/test/tamper` and `/api/test/reseed`; these are currently unauthenticated development endpoints.
+
 ## API Conventions
 
 ### Base URL
