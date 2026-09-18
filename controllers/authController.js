@@ -67,6 +67,7 @@ export async function login(req, res) {
       staff: {
         id: staff.id,
         name: staff.name,
+        email: staff.email,
         role: staff.role,
         currentShiftWardId,
         currentWard: staff_ward_at_time

@@ -29,6 +29,12 @@ DB_PORT=3306
 DB_USER=root
 DB_PASSWORD=your-password
 DB_NAME=hospitaldb
+SMTP_HOST=smtp.example.com
+SMTP_PORT=587
+SMTP_SECURE=false
+SMTP_USER=your-smtp-user
+SMTP_PASSWORD=your-smtp-password
+MAIL_FROM=alerts@example.com
 ```
 
 Or a database URL:
@@ -39,6 +45,8 @@ DB_DIALECT=mysql
 ```
 
 `JWT_SECRET` must be stable across restarts. Changing it invalidates existing tokens. Do not use the repository fallback secret in production.
+
+Each staff record includes an email address. When emergency access is granted, the API sends the alert to every admin's stored email using the configured SMTP service. Delivery errors are logged without undoing the emergency access or audit event.
 
 ### Start
 
@@ -68,6 +76,12 @@ DB_URL=mysql://user:password@host:3306/hospitaldb
 DB_DIALECT=mysql
 JWT_SECRET=replace-with-a-long-random-production-secret
 CORS_ORIGIN=https://your-new-frontend.example.com
+SMTP_HOST=smtp.example.com
+SMTP_PORT=587
+SMTP_SECURE=false
+SMTP_USER=your-smtp-user
+SMTP_PASSWORD=your-smtp-password
+MAIL_FROM=alerts@example.com
 ```
 
 `DB_URL` is recommended for Vercel. The database must be a reachable hosted MySQL-compatible service; `127.0.0.1` points to the Vercel runtime, not your development computer. The database must allow connections from Vercel's deployment environment and should use TLS where supported.

@@ -9,6 +9,14 @@ const Staff = sequelize.define('Staff', {
     type: DataTypes.STRING(255),
     allowNull: false
   },
+  email: {
+    type: DataTypes.STRING(255),
+    allowNull: false,
+    unique: true,
+    validate: {
+      isEmail: true
+    }
+  },
   role: {
     type: DataTypes.ENUM('doctor', 'nurse', 'clerk', 'admin'),
     allowNull: false

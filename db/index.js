@@ -61,5 +61,24 @@ export { Op, DataTypes } from 'sequelize';
 export async function initSchema() {
   await sequelize.authenticate();
   await sequelize.sync();
+
+  const queryInterface = sequelize.getQueryInterface();
+  const staffColumns = await queryInterface.describeTable('staff');
+
+  if (!staffColumns.email) {
+    await queryInterface.addColumn('staff', 'email', {
+      type: DataTypes.STRING(255),
+      allowNull: true
+    });
+  }
+
+  await sequelize.query(
+    "UPDATE staff SET email = CONCAT(id, '@hospital.local') WHERE email IS NULL"
+  );
+
+  await queryInterface.changeColumn('staff', 'email', {
+    type: DataTypes.STRING(255),
+    allowNull: false
+  });
 }
 export {sequelize}

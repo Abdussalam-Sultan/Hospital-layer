@@ -41,21 +41,22 @@ export async function seedDatabase() {
   const now = new Date();
 
   const staffMembers = [
-    { id: 'doc-meredith-grey', name: 'Dr. Meredith Grey', role: 'doctor', default_ward: 'Ward 1', initial_ward_id: 1 },
-    { id: 'doc-cristina-yang', name: 'Dr. Cristina Yang', role: 'doctor', default_ward: 'ICU', initial_ward_id: 4 },
-    { id: 'doc-alex-karev', name: 'Dr. Alex Karev', role: 'doctor', default_ward: 'Ward 2', initial_ward_id: 2 },
-    { id: 'doc-addison-montgomery', name: 'Dr. Addison Montgomery', role: 'doctor', default_ward: 'Maternity', initial_ward_id: 5 },
-    { id: 'nurse-carol-hathaway', name: 'Nurse Carol Hathaway', role: 'nurse', default_ward: 'Ward 1', initial_ward_id: 1 },
-    { id: 'nurse-jackie-peyton', name: 'Nurse Jackie Peyton', role: 'nurse', default_ward: 'Ward 2', initial_ward_id: 2 },
-    { id: 'nurse-charlyne-yi', name: 'Nurse Charlyne Yi', role: 'nurse', default_ward: 'Ward 3', initial_ward_id: 3 },
-    { id: 'clerk-pam-beesly', name: 'Clerk Pam Beesly', role: 'clerk', default_ward: 'Ward 1', initial_ward_id: 1 },
-    { id: 'admin-miranda-bailey', name: 'Admin Miranda Bailey', role: 'admin', default_ward: 'ICU', initial_ward_id: 4 },
-    { id: 'admin-richard-webber', name: 'Admin Richard Webber', role: 'admin', default_ward: 'Ward 3', initial_ward_id: 3 }
+    { id: 'doc-meredith-grey', name: 'Dr. Meredith Grey', email: 'meredith.grey@hospital.example', role: 'doctor', default_ward: 'Ward 1', initial_ward_id: 1 },
+    { id: 'doc-cristina-yang', name: 'Dr. Cristina Yang', email: 'cristina.yang@hospital.example', role: 'doctor', default_ward: 'ICU', initial_ward_id: 4 },
+    { id: 'doc-alex-karev', name: 'Dr. Alex Karev', email: 'alex.karev@hospital.example', role: 'doctor', default_ward: 'Ward 2', initial_ward_id: 2 },
+    { id: 'doc-addison-montgomery', name: 'Dr. Addison Montgomery', email: 'addison.montgomery@hospital.example', role: 'doctor', default_ward: 'Maternity', initial_ward_id: 5 },
+    { id: 'nurse-carol-hathaway', name: 'Nurse Carol Hathaway', email: 'carol.hathaway@hospital.example', role: 'nurse', default_ward: 'Ward 1', initial_ward_id: 1 },
+    { id: 'nurse-jackie-peyton', name: 'Nurse Jackie Peyton', email: 'jackie.peyton@hospital.example', role: 'nurse', default_ward: 'Ward 2', initial_ward_id: 2 },
+    { id: 'nurse-charlyne-yi', name: 'Nurse Charlyne Yi', email: 'charlyne.yi@hospital.example', role: 'nurse', default_ward: 'Ward 3', initial_ward_id: 3 },
+    { id: 'clerk-pam-beesly', name: 'Clerk Pam Beesly', email: 'pam.beesly@hospital.example', role: 'clerk', default_ward: 'Ward 1', initial_ward_id: 1 },
+    { id: 'admin-miranda-bailey', name: 'Admin Miranda Bailey', email: 'miranda.bailey@hospital.example', role: 'admin', default_ward: 'ICU', initial_ward_id: 4 },
+    { id: 'admin-richard-webber', name: 'Admin Richard Webber', email: 'richard.webber@hospital.example', role: 'admin', default_ward: 'Ward 3', initial_ward_id: 3 }
   ];
 
   const staffToCreate = staffMembers.map((s) => ({
     id: s.id,
     name: s.name,
+    email: s.email,
     role: s.role,
     default_ward: s.default_ward,
     password_hash: passwordHash,

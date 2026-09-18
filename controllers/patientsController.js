@@ -1,5 +1,6 @@
-import { Patient, Ward, Shift } from '../models/index.js';
+import { Patient, Ward, Shift, Staff } from '../models/index.js';
 import { appendAuditLog } from '../utils/hashChain.js';
+import { sendEmergencyAlert } from '../utils/email.js';
 import { canAccessChartInWard, canEmergencyOverrideRole, sanitizePatientForRole } from '../utils/roleAccess.js';
 
 /**
@@ -182,6 +183,12 @@ export async function emergencyAccess(req, res) {
       return res.status(404).json({ error: 'Patient record not found' });
     }
 
+    const admins = await Staff.findAll({
+      where: { role: 'admin' },
+      attributes: ['email']
+    });
+    const adminEmails = admins.map((admin) => admin.email).filter(Boolean);
+
     const activeShift = await getActiveShiftForStaff(staffId);
     const staffWardName = activeShift ? activeShift.ward_name : 'Unassigned';
     const patientWardName = patient.ward_name;
@@ -196,6 +203,18 @@ export async function emergencyAccess(req, res) {
       patient_ward_at_time: patientWardName,
       timestamp: new Date().toISOString()
     });
+
+    try {
+      await sendEmergencyAlert({
+        staffId,
+        recipientEmails: adminEmails,
+        role,
+        patient,
+        reason: reason.trim()
+      });
+    } catch (emailError) {
+      console.error('Emergency email delivery failed:', emailError);
+    }
 
     return res.json({
       message: 'Emergency override access granted.',
