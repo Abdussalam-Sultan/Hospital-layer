@@ -49,3 +49,4 @@ export function startAnchorScheduler() {
 }
 
 export const app = createApp();
+export default app;
